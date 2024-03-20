@@ -431,6 +431,68 @@ public class RunPaymentsApp {
 				System.out.print("The account may not found");
 
 			}
+			public static void WalletOperation() {
+		while (true) {
+			System.out.println("1. Add money to Wallet");
+			System.out.println("2. Check wallet balance");
+			System.out.println("3. Back");
+
+			Scanner sc = new Scanner(System.in);
+			System.out.println("Enter an Option: ");
+			int opt = sc.nextInt();
+
+			switch (opt) {
+			case 1:
+				System.out.println("Add money to Wallet");
+				if (currUserId != -1) {
+					Wallet wa = new Wallet();
+					// System.out.println("Wallet Balance: " + wa.getBalance());
+
+					Scanner scan = new Scanner(System.in);
+					System.out.println("Enter an amount: ");
+					double amount = scan.nextDouble();
+					wa.setBalance(wa.getBalance() + amount);
+					if (amount <= wa.getWalletAmountLimit()) {
+						UserOperations uop = new UserOperations();
+						uop.addMoneyToWallet(amount);
+					} else {
+						System.out.println("Out of the Wallet Limit!!");
+					}
+					// System.out.println("Current Wallet Balance: " + wa.getBalance());
+					System.out.println();
+				} else {
+					System.out.println("Please check whether user is login or not!!");
+				}
+
+				break;
+
+			case 2:
+				if (currUserId != -1) {
+					UserOperations uop = new UserOperations();
+					try {
+						System.out.println("Current Wallet Balance: " + uop.checkWalletBalance());
+					} catch (NullPointerException ne) {
+						ne.printStackTrace();
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+				break;
+
+			case 3:
+				System.out.println("Thanks You!! \n");
+				break;
+
+			default:
+				System.out.println("Enter valid Option!!");
+			}
+			if (opt == 3) {
+				break;
+			}
+		}
+
+	}
+
 
 		}
 
